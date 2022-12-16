@@ -1,11 +1,20 @@
 <a id="link">Click here to continue to <span id="link-text"></span></a>
 
+<br><br><br>
+
 <p style="color:gray;">
   <a style="color:gray;" href="https://github.com/mvernacc/elephant-forwarder">instructions and source code on github.</a>
   sic sempre tyrannis.
 </p>
 
+<p style="color:gray;">
+Paste a Mastodon link here to create your own forwarding:
+<input type="text" id="new-url-in"><br>
+<span id="new-url-out"></span>
+</p>
+
 <script>
+  // Set up URL forwarding link.
   const queryString = window.location.search;
   const params = new URLSearchParams(queryString);
   let url = params.get("link");
@@ -19,4 +28,15 @@
 
   document.getElementById("link").setAttribute("href", url);
   document.getElementById("link-text").textContent = url;
+
+  // Callback for new forwarding-URL creation.
+  const newUrlIn = document.getElementById("new-url-in");
+  let newUrlOut = document.getElementById("new-url-out");
+  const inputHandler = function(e) {
+    let userInputUrl = e.target.value;
+    const processedUrl = "https://github.com/mvernacc/elephant-forwarder?link=" + userInputUrl.replace(".", ",");
+    newUrlOut.textContent = processedUrl;
+  }
+  newUrlIn.addEventListener("input", inputHandler);
+
 </script>
